@@ -39,7 +39,7 @@ def shuffle(tensors,
     """
 
     tensors = list(tensors)
-    with tf.name_scope(name, tensors):
+    with tf.name_scope(name, values=tensors):
         dtypes = dtypes or list([t.dtype for t in tensors])
         queue = tf.RandomShuffleQueue(
             seed=seed,
@@ -106,7 +106,7 @@ def shuffle_batch(tensors,
     """
 
     tensors = list(tensors)
-    with tf.name_scope(name, tensors):
+    with tf.name_scope(name, values=tensors):
         dtypes = dtypes or list([t.dtype for t in tensors])
         shapes = shapes or list([t.get_shape() for t in tensors])
         inputs = shuffle(tensors,

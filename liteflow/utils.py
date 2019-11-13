@@ -38,7 +38,7 @@ def as_scope(scope):
     if scope is None:
         raise ValueError('Cannot create a scope from a None.')
     if isinstance(scope, str):
-        return next(tf.variable_scope(scope).gen)  # pylint: disable=I0011,E1101
+        return tf.variable_scope(scope)  # pylint: disable=I0011,E1101
     if isinstance(scope, tf.VariableScope):
         return scope
     raise TypeError("""`scope` argument can be of type str, """

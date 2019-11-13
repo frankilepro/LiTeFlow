@@ -107,11 +107,11 @@ class Layer(object):
         """
         if self._scope is None:
             if self._reuse:
-                self._scope = next(tf.variable_scope(  # pylint: disable=I0011,E1101
-                    scope if scope is not None else self._default_scope()).gen)
+                self._scope = tf.variable_scope(  # pylint: disable=I0011,E1101
+                    scope if scope is not None else self._default_scope())
             else:
-                self._scope = next(tf.variable_scope(  # pylint: disable=I0011,E1101
-                    scope, default_name=self._default_scope().name).gen)
+                self._scope = tf.variable_scope(  # pylint: disable=I0011,E1101
+                    scope, default_name=self._name)
 
     @abc.abstractmethod
     def _call_helper(self, *args, **kwargs):
@@ -145,7 +145,7 @@ class Layer(object):
         """
         self._set_scope(kwargs.pop('scope', None))
         # pylint: disable=E1129
-        with tf.variable_scope(self._scope) as scope:
+        with tf.variable_scope(self._name) as scope:
             if self._reuse:
                 scope.reuse_variables()
             result = self._call_helper(*args, **kwargs)
